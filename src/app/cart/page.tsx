@@ -1,7 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Cart = () => {
+  const user=true;
   return (
     <div className="h-[calc(100vh-6rem)] md:h-[calc(100vh-9rem)] flex flex-col text-red-500 lg:flex-row ">
       {/* PRODUCTS CONTAINER */}
@@ -83,9 +85,11 @@ const Cart = () => {
           <span className="">TOTAL(INCL. VAT)</span>
           <span className="font-bold">$81.70</span>
         </div>
+        <Link href={user?"/orders":"/login"}>
         <button className="bg-red-500 text-white p-3 rounded-md w-1/2 self-end">
           CHECKOUT
         </button>
+        </Link>
       </div>
     </div>
   );
