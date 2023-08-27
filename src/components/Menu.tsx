@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link';
-import React, { useState } from 'react'
-import CartIcon from './CartIcon';
+import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
+import CartIcon from "./CartIcon";
 
 const links = [
-    { id: 1, title: "Homepage", url: "/" },
-    { id: 2, title: "Menu", url: "/menu" },
-    { id: 3, title: "Working Hours", url: "/" },
-    { id: 4, title: "Contact", url: "/" },
-  ];
+  { id: 1, title: "Homepage", url: "/" },
+  { id: 2, title: "Menu", url: "/menu" },
+  { id: 3, title: "Working Hours", url: "/" },
+  { id: 4, title: "Contact", url: "/" },
+];
 
 const Menu = () => {
-    const [open , setOpen] =useState(false)
+  const [open, setOpen] = useState(false);
 
-      // TEMPORARY
+  // TEMPORARY
   const user = false;
 
   return (
     <div>
-         <Image
-        src={open ===true ? "/close.png" : "/open.png"}
+      <Image
+        src={open === true ? "/close.png" : "/open.png"}
         alt="icon"
         width={20}
         height={20}
@@ -35,7 +35,7 @@ const Menu = () => {
               {item.title}
             </Link>
           ))}
-             <Link
+          <Link
             href={user ? "/orders" : "login"}
             onClick={() => setOpen(false)}
           >
@@ -46,9 +46,8 @@ const Menu = () => {
           </Link>
         </div>
       )}
-     </div>
+    </div>
+  );
+};
 
-  )
-}
-
-export default Menu
+export default Menu;

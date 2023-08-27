@@ -16,7 +16,7 @@ const Price = ({ price, id, options }: PriceProps) => {
 
   useEffect(() => {
     setTotal(
-      quantity * (options ? price + options[selected].additionalPrice : price)
+      quantity * (options ? price + options[selected].additionalPrice : price),
     );
   }, [quantity, selected, options, price]);
 
@@ -59,11 +59,11 @@ const Price = ({ price, id, options }: PriceProps) => {
           </div>
         </div>
         {/* CART BUTTON */}
-      <Link href={"/cart"}>
-      <button className="uppercase w-56 bg-red-500 text-white p-3 ring-1 ring-red-500">
-          Add to Cart
-        </button>
-      </Link>
+        <Link href={"/cart"}>
+          <button className="uppercase w-56 bg-red-500 text-white p-3 ring-1 ring-red-500">
+            Add to Cart
+          </button>
+        </Link>
       </div>
     </div>
   );

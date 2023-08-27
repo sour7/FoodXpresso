@@ -1,5 +1,5 @@
 // WITH A LIBRARY
-"use client"
+"use client";
 // import React from 'react'
 // import Countdown from 'react-countdown'
 
@@ -15,13 +15,12 @@
 
 // export default CountDown
 
-
 // WITHOUT A LIBRARY
 // "use client"
 // import React, { useState, useEffect } from "react";
 
 // const CountDown = () => {
-  
+
 //   let difference = +new Date(`10/10/2023`) - +new Date();
 //   const [delay, setDelay] = useState(difference);
 
@@ -52,9 +51,8 @@
 
 // export default CountDown;
 
-
-import React, { useEffect, useState } from 'react';
-import Countdown from 'react-countdown';
+import React, { useEffect, useState } from "react";
+import Countdown from "react-countdown";
 
 const endingDate = new Date("2023-12-25");
 
@@ -66,8 +64,8 @@ const CountDown = () => {
   }, []);
 
   return (
-    <div className='font-bold text-5xl text-yellow-300'>
-         {isClient && <Countdown date={endingDate} />}
+    <div className="font-bold text-5xl text-yellow-300">
+      {isClient && <Countdown date={endingDate} />}
     </div>
   );
 };
