@@ -7,7 +7,7 @@ const Cart = () => {
   return (
     <div className="h-[calc(100vh-6rem)] md:h-[calc(100vh-9rem)] flex flex-col text-red-500 lg:flex-row ">
       {/* PRODUCTS CONTAINER */}
-      <div className="h-1/2 overscroll-y-contain p-4 flex flex-col justify-center md:justify-start overflow-auto lg:h-full lg:w-2/3 2xl:w-1/2 lg:px-20 xl:px-40">
+      <div className="h-1/2 overscroll-y-contain p-4 flex flex-col justify-start overflow-auto lg:h-full lg:w-2/3 2xl:w-1/2 lg:px-20 xl:px-40">
         {/* SINGLE ITEM */}
         <div className="flex items-center justify-between mb-4">
           <Image src="/temporary/p1.png" alt="" width={100} height={100} />
@@ -25,13 +25,21 @@ const Cart = () => {
             <h1 className="uppercase text-xl font-bold">sicilian</h1>
             <span>Large</span>
           </div>
-          <h2 className="font-bold">$79.90</h2>
+          <h2 className="font-bold">$7 9.90</h2>
           <span className="cursor-pointer">X</span>
         </div>
-        <div className="flex items-center justify-between mb-4">
+        <div
+          className="flex
+         items-center justify-between mb-4"
+        >
           <Image src="/temporary/p1.png" alt="" width={100} height={100} />
           <div className="">
-            <h1 className="uppercase text-xl font-bold">sicilian</h1>
+            <h1
+              className="uppercase 
+            text-xl font-bold"
+            >
+              sicilian
+            </h1>
             <span>Large</span>
           </div>
           <h2 className="font-bold">$79.90</h2>
