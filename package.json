@@ -10,6 +10,7 @@
     "pretty": "prettier --cache --write ."
   },
   "dependencies": {
+    "@prisma/client": "^5.2.0",
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
@@ -19,6 +20,7 @@
     "next": "13.4.12",
     "postcss": "8.4.27",
     "prettier-plugin-tailwindcss": "^0.5.3",
+    "prisma": "^5.2.0",
     "react": "18.2.0",
     "react-countdown": "^2.3.5",
     "react-dom": "18.2.0",

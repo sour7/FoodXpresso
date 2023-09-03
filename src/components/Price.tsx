@@ -16,7 +16,7 @@ const Price = ({ price, id, options }: PriceProps) => {
 
   useEffect(() => {
     setTotal(
-      quantity * (options ? price + options[selected].additionalPrice : price),
+      quantity * (options ? price + options[selected].additionalPrice : price)
     );
   }, [quantity, selected, options, price]);
 
@@ -40,10 +40,9 @@ const Price = ({ price, id, options }: PriceProps) => {
         ))}
       </div>
       {/* QUANTITY AND ADD BUTTON CONTAINER */}
-      <div className="flex flex-col gap-2 md:flex-row">
-        {/* QUANTITY */}
-        <div className="flex justify-between w-3/6 p-3 ring-1 ring-red-500">
-          <span>Quantity</span>
+      <div className="flex  gap-4  items-center text-center w-full lg:mt-4">
+        <div className="flex px-2 justify-between w-3/6 ring-1 ring-red-500 rounded-md">
+          <span className="p-2 items-center">Quantity</span>
           <div className="flex gap-4 items-center">
             <button
               onClick={() => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))}
@@ -60,7 +59,7 @@ const Price = ({ price, id, options }: PriceProps) => {
         </div>
         {/* CART BUTTON */}
         <Link href={"/cart"}>
-          <button className="uppercase w-56 bg-red-500 text-white p-3 ring-1 ring-red-500">
+          <button className="p-2 rounded-md ring-1 ring-red-500 bg-red-500 text-white hover:bg-red-700">
             Add to Cart
           </button>
         </Link>
