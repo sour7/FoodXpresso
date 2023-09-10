@@ -1,7 +1,7 @@
 //Ref: https://authjs.dev/getting-started/oauth-tutorial#creating-the-server-config
 
-import {NextAuthOptions, getServerSession} from "next-auth";
-import GoogleProvider from "next-auth/providers/google"
+import { NextAuthOptions, getServerSession } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "./db";
 
@@ -15,4 +15,4 @@ export const authoptions: NextAuthOptions = {
   ],
 };
 
-export const getAuthSession =()=>getServerSession(authoptions)
+export const getAuthSession = () => getServerSession(authoptions);

@@ -9,7 +9,7 @@ const getData = async (category: string) => {
     `http://localhost:3000/api/products?cat=${category}`,
     {
       cache: "no-store",
-    }
+    },
   );
   if (!res.ok) {
     throw new Error("Failed!");
