@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: sourabh707
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_DB: food-xprsoo
+    ports:
+      - 5432:5432

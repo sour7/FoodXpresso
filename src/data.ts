@@ -352,15 +352,6 @@ export const singleProduct: Product = {
   ],
 };
 
-type Menu = {
-  id: number;
-  slug: string;
-  title: string;
-  desc?: string;
-  img?: string;
-  color: string;
-}[];
-
 export const menu: Menu = [
   {
     id: 1,
