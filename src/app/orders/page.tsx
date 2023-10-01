@@ -4,6 +4,8 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const OrdersPage = () => {
   const { data: session, status } = useSession();
@@ -31,8 +33,6 @@ const OrdersPage = () => {
         },
         body: JSON.stringify({ status }), // Wrap status in an object
       });
-      console.log("res", res);
-
       if (!res.ok) {
         // Handle the case where the fetch request fails, e.g., throw an error
         throw new Error("Failed to update order");
@@ -52,8 +52,7 @@ const OrdersPage = () => {
     const status = input.value;
 
     mutation.mutate({ id, status });
-    alert(status);
-    // toast.success("The order status has been changed!")
+    toast.success("The order status has been changed!");
   };
 
   if (isLoading || status === "loading") return "Loading...";
