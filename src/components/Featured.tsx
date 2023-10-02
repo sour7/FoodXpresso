@@ -16,7 +16,6 @@ const getFeaturedProduct = async () => {
 
 const Featured = async () => {
   const featuredProducts: ProductType[] = await getFeaturedProduct();
-  console.log(featuredProducts);
 
   return (
     <div className="w-screen overflow-x-scroll text-red-500">
