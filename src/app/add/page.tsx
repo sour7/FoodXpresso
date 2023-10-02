@@ -10,7 +10,6 @@ type Inputs = {
   title: string;
   desc: string;
   price: number;
-  catSlug: string;
 };
 
 type Option = {
@@ -24,10 +23,9 @@ const AddPage = () => {
     title: "",
     desc: "",
     price: 0,
-    catSlug: "",
   });
-  const [isChecked, setIsChecked] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [catSlug, setCatSlug] = useState("");
 
   const [option, setOption] = useState<Option>({
     title: "",
@@ -37,8 +35,7 @@ const AddPage = () => {
   const [options, setOptions] = useState<Option[]>([]);
   const [file, setFile] = useState<File>();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); // State for image preview
-  ; // State to track the selected category
-
+  // State to track the selected category
   const router = useRouter();
 
   if (status === "loading") {
@@ -51,7 +48,7 @@ const AddPage = () => {
 
   // Function to handle checkbox change
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked); // Toggle the checkbox's value
+    setIsFeatured(!isFeatured); // Toggle the checkbox's value
   };
 
   const handleChange = (
@@ -81,6 +78,7 @@ const AddPage = () => {
     const data = new FormData();
     data.append("file", file);
     data.append("upload_preset", "food-expresso");
+   
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/dsby9dncp/image/upload",
       {
@@ -98,14 +96,14 @@ const AddPage = () => {
     e.preventDefault();
     try {
       const url = await upload();
-      console.log(url);
+      console.log({ url, ...inputs, isFeatured, catSlug, options });
       const res = await fetch("http://localhost:3000/api/products", {
         method: "POST",
         body: JSON.stringify({
           img: url,
           ...inputs,
-          isChecked,
-          selectedCategory,
+          isFeatured,
+          catSlug,
           options,
         }),
       });
@@ -177,13 +175,13 @@ const AddPage = () => {
           <label className="text-sm">Category</label>
           <select
             className="ring-1 ring-red-200 p-4 rounded-sm placeholder:text-red-200 outline-none"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            value={catSlug}
+            onChange={(e) => setCatSlug(e.target.value)}
           >
-            <option value="">Select a category</option>
-            <option value="pizzas">Pizzas</option>
-            <option value="pastas">Pastas</option>
-            <option value="burgers">Burgers</option>
+            <option value="select">Select a category</option>
+            <option value="pizzas">pizzas</option>
+            <option value="pastas">pastas</option>
+            <option value="burgers">burgers</option>
           </select>
         </div>
         <div className="w-full flex flex-col gap-2">
@@ -223,14 +221,14 @@ const AddPage = () => {
                 }
               >
                 <span>{opt.title}</span>
-                <span className="text-xs"> (+ ${opt.additionalPrice})</span>
+                <span className="text-xs"> (+ ₹{opt.additionalPrice})</span>
               </div>
             ))}
           </div>
           <label className="flex items-center space-x-2 cursor-pointer">
             <input
               type="checkbox"
-              checked={isChecked}
+              checked={isFeatured}
               onChange={handleCheckboxChange}
               className="w-6 h-6 text-red-500 focus:ring-0" // Adjust size and color
             />
