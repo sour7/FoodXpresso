@@ -1,18 +1,27 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import Menu from "./Menu";
 import CartIcon from "./CartIcon";
 import Image from "next/image";
 import UserLinks from "./UserLinks";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
-  const user = false;
+  const { data } = useSession();
+
   return (
-    <div className="h-12 text-red-500 p-4 flex items-center justify-between border-b-2 border-b-red-500 uppercase lg:px-20 xl:px-40">
+    <div className="h-12 text-red-500 p-4 flex items-center justify-around border-b-2 border-b-red-500 uppercase lg:px-20 xl:px-40">
       <div className="hidden md:flex gap-4 flex-1">
         <Link href="/">Home</Link>
         <Link href="/menu">Menu</Link>
         <Link href="/">Contect Us</Link>
+        {data?.user.isAdmin && (
+          <Link href="/add" className="font-extrabold text-pink-700">
+            {" "}
+            +Add new
+          </Link>
+        )}
       </div>
 
       {/* LOGO */}

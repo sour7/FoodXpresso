@@ -3,8 +3,7 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import type { ChangeEvent, FormEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 type Inputs = {
   title: string;
@@ -34,6 +33,7 @@ const AddPage = () => {
 
   const [options, setOptions] = useState<Option[]>([]);
   const [file, setFile] = useState<File>();
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null); // State for image preview
 
   const router = useRouter();
 
@@ -46,13 +46,13 @@ const AddPage = () => {
   }
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  const changeOption = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeOption = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOption((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
@@ -61,29 +61,40 @@ const AddPage = () => {
   const handleChangeImg = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     const item = (target.files as FileList)[0];
+    console.log(item);
     setFile(item);
+    // Create a preview URL for the selected image
+    const imageUrl = URL.createObjectURL(item);
+    setPreviewUrl(imageUrl);
   };
 
   const upload = async () => {
     const data = new FormData();
+
     data.append("file", file!);
     data.append("upload_preset", "food-expresso");
 
-    const res = await fetch("https://api.cloudinary.com/v1_1/dsby9dncp/image", {
-      method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
-      body: data,
-    });
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dsby9dncp/image/upload",
+      {
+        method: "POST",
+        headers: {},
+        body: data,
+      }
+    );
 
     const resData = await res.json();
+    console.log("Response from Cloudinary:", resData);
+
     return resData.url;
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const url = await upload();
+      console.log(url);
       const res = await fetch("http://localhost:3000/api/products", {
         method: "POST",
         body: JSON.stringify({
@@ -102,7 +113,7 @@ const AddPage = () => {
   };
 
   return (
-    <div className="p-4 lg:px-20 xl:px-40  flex items-center justify-center text-red-500">
+    <div className="p-4 lg:px-20 xl:px-40 flex items-center justify-center text-red-500">
       <form onSubmit={handleSubmit} className="flex flex-wrap gap-6">
         <h1 className="text-4xl mb-2 text-gray-300 font-bold">
           Add New Product
@@ -121,6 +132,9 @@ const AddPage = () => {
             id="file"
             className="hidden"
           />
+          {previewUrl && (
+            <Image src={previewUrl} alt="Preview" width={100} height={100} />
+          )}
         </div>
         <div className="w-full flex flex-col gap-2 ">
           <label className="text-sm">Title</label>
