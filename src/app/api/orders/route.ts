@@ -48,13 +48,13 @@ export const POST = async (req: NextRequest) => {
       console.log(err);
       return new NextResponse(
         JSON.stringify({ message: "Something went wrong!" }),
-        { status: 500 }
+        { status: 500 },
       );
     }
   } else {
     return new NextResponse(
       JSON.stringify({ message: "You are not authenticated!" }),
-      { status: 401 }
+      { status: 401 },
     );
   }
 };

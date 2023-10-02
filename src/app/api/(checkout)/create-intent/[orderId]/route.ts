@@ -1,11 +1,11 @@
-import  prisma  from "@/utils/db";
+import prisma from "@/utils/db";
 import { NextRequest, NextResponse } from "next/server";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: { orderId: string } },
 ) {
   const { orderId } = params;
 
@@ -16,7 +16,7 @@ export async function POST(
   });
 
   if (order) {
-      const priceNumeric = order.price.toNumber();
+    const priceNumeric = order.price.toNumber();
     const paymentIntent = await stripe.paymentIntents.create({
       amount: priceNumeric,
       currency: "inr",
@@ -33,8 +33,11 @@ export async function POST(
     });
 
     return new NextResponse(
-      JSON.stringify({ clientSecret: paymentIntent.client_secret, total: paymentIntent.amount }),
-      { status: 200 }
+      JSON.stringify({
+        clientSecret: paymentIntent.client_secret,
+        total: paymentIntent.amount,
+      }),
+      { status: 200 },
     );
   }
   return new NextResponse(JSON.stringify({ message: "Order not found!" }), {
