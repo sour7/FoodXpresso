@@ -123,7 +123,7 @@ const CheckoutForm = ({ totalPayment }: { totalPayment: number | string }) => {
                 <div className="spinner" id="spinner"></div>
               ) : (
                 <span>
-                  {isHovered ? "Pay Now" : `₹${totalPayment.toString()}`}
+                  {isHovered ? "Pay Now" : `Pay ₹${totalPayment.toString()}`}
                 </span>
               )}
             </span>

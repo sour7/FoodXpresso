@@ -37,6 +37,7 @@ const AddPage = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); // State for image preview
   // State to track the selected category
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -78,7 +79,7 @@ const AddPage = () => {
     const data = new FormData();
     data.append("file", file);
     data.append("upload_preset", "food-expresso");
-   
+
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/dsby9dncp/image/upload",
       {
@@ -94,6 +95,7 @@ const AddPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const url = await upload();
       console.log({ url, ...inputs, isFeatured, catSlug, options });
@@ -109,7 +111,7 @@ const AddPage = () => {
       });
 
       const data = await res.json();
-      console.log("data", data);
+      setLoading(false);
       toast.success("New product added");
       router.push(`/product/${data.id}`);
     } catch (err) {
@@ -118,7 +120,7 @@ const AddPage = () => {
   };
 
   return (
-    <div className="p-4 lg:px-20 xl:px-40 flex items-center justify-center text-red-500">
+    <div className="p-4 lg:px-20 xl:px-40 flex items-center justify-center text-red-500 relative">
       <form onSubmit={handleSubmit} className="flex flex-wrap gap-6">
         <h1 className="text-4xl mb-2 text-gray-300 font-bold">
           Add New Product
@@ -242,6 +244,11 @@ const AddPage = () => {
           Submit
         </button>
       </form>
+      {loading && (
+        <div className="w-full h-full absolute top-1/2 left-1/2">
+          <Image src="/loading.gif" width={200} height={200} alt="loading" />
+        </div>
+      )}
     </div>
   );
 };
