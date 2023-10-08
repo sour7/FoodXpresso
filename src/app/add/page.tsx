@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/Loading";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -40,7 +41,7 @@ const AddPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   if (status === "unauthenticated" || !session?.user.isAdmin) {
@@ -53,7 +54,7 @@ const AddPage = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setInputs((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -86,7 +87,7 @@ const AddPage = () => {
         method: "POST",
         headers: {},
         body: data,
-      }
+      },
     );
     const resData = await res.json();
     console.log("Response from Cloudinary:", resData);
@@ -96,6 +97,7 @@ const AddPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const url = await upload();
       console.log({ url, ...inputs, isFeatured, catSlug, options });
@@ -122,12 +124,12 @@ const AddPage = () => {
   return (
     <div className="p-4 lg:px-20 xl:px-40 flex items-center justify-center text-red-500 relative">
       <form onSubmit={handleSubmit} className="flex flex-wrap gap-6">
-        <h1 className="text-4xl mb-2 text-gray-300 font-bold">
+        <h1 className="text-xl underline text-gray-600 font-bold">
           Add New Product
         </h1>
-        <div className="w-full flex flex-col gap-2 ">
+        <div className="w-full flex flex-col gap-1 ">
           <label
-            className="text-sm cursor-pointer flex gap-4 items-center"
+            className="text-sm cursor-pointer flex gap-2 items-center"
             htmlFor="file"
           >
             <Image src="/upload.png" alt="" width={30} height={20} />
@@ -143,10 +145,10 @@ const AddPage = () => {
             <Image src={previewUrl} alt="Preview" width={100} height={100} />
           )}
         </div>
-        <div className="w-full flex flex-col gap-2 ">
+        <div className="w-full flex flex-col">
           <label className="text-sm">Title</label>
           <input
-            className="ring-1 ring-red-200 p-4 rounded-sm placeholder:text-red-200 outline-none"
+            className="ring-1 ring-red-200 p-1 rounded-sm placeholder:text-red-200 outline-none"
             type="text"
             placeholder="Bella Napoli"
             name="title"
@@ -156,27 +158,27 @@ const AddPage = () => {
         <div className="w-full flex flex-col gap-2">
           <label className="text-sm">Description</label>
           <textarea
-            rows={3}
-            className="ring-1 ring-red-200 p-4 rounded-sm placeholder:text-red-200 outline-none"
+            rows={2}
+            className="ring-1 ring-red-200 p-1 rounded-sm placeholder:text-red-200 outline-none"
             placeholder="A timeless favorite with a twist, showcasing a thin crust topped with sweet tomatoes, fresh basil and creamy mozzarella."
             name="desc"
             onChange={handleChange}
           />
         </div>
-        <div className="w-full flex flex-col gap-2 ">
+        <div className="w-full flex flex-col gap-1">
           <label className="text-sm">Price</label>
           <input
-            className="ring-1 ring-red-200 p-4 rounded-sm placeholder:text-red-200 outline-none"
+            className="ring-1 ring-red-200 p-1 rounded-sm placeholder:text-red-200 outline-none"
             type="number"
-            placeholder="29"
+            placeholder="299"
             name="price"
             onChange={handleChange}
           />
         </div>
-        <div className="w-full flex flex-col gap-2 ">
+        <div className="w-full flex flex-col gap-1">
           <label className="text-sm">Category</label>
           <select
-            className="ring-1 ring-red-200 p-4 rounded-sm placeholder:text-red-200 outline-none"
+            className="ring-1 ring-red-200 p-1 rounded-sm placeholder:text-red-200 outline-none"
             value={catSlug}
             onChange={(e) => setCatSlug(e.target.value)}
           >
@@ -190,14 +192,14 @@ const AddPage = () => {
           <label className="text-sm">Options</label>
           <div className="flex">
             <input
-              className="ring-1 ring-red-200 p-4 rounded-sm placeholder:text-red-200 outline-none"
+              className="ring-1 ring-red-200 p-1 rounded-sm placeholder:text-red-200 outline-none"
               type="text"
               placeholder="Title"
               name="title"
               onChange={changeOption}
             />
             <input
-              className="ring-1 ring-red-200 p-4 rounded-sm placeholder:text-red-200 outline-none"
+              className="ring-1 ring-red-200 p-1 rounded-sm placeholder:text-red-200 outline-none"
               type="number"
               placeholder="Additional Price"
               name="additionalPrice"
@@ -205,7 +207,7 @@ const AddPage = () => {
             />
             <button
               type="button"
-              className="bg-gray-500 p-2 text-white"
+              className="bg-gray-500 p-1 text-white"
               onClick={() => setOptions((prev) => [...prev, option])}
             >
               Add Option
@@ -218,7 +220,7 @@ const AddPage = () => {
                 className="p-2  rounded-md cursor-pointer bg-gray-200 text-gray-400"
                 onClick={() =>
                   setOptions((prev) =>
-                    prev.filter((item) => item.title !== opt.title)
+                    prev.filter((item) => item.title !== opt.title),
                   )
                 }
               >
@@ -239,16 +241,12 @@ const AddPage = () => {
         </div>
         <button
           type="submit"
-          className="bg-red-500 p-4 text-white w-48 rounded-md relative h-14 flex items-center justify-center"
+          className="bg-red-500 p-1 text-white w-36 rounded-md relative h-10 flex items-center justify-center"
         >
           Submit
         </button>
       </form>
-      {loading && (
-        <div className="w-full h-full absolute top-1/2 left-1/2">
-          <Image src="/loading.gif" width={200} height={200} alt="loading" />
-        </div>
-      )}
+      {loading && <Loading />}
     </div>
   );
 };

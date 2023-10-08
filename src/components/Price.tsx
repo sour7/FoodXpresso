@@ -20,7 +20,7 @@ const Price = ({ product }: { product: ProductType }) => {
     if (product.options?.length) {
       setTotal(
         quantity * Number(product.price) +
-          Number(product.options[selected].additionalPrice)
+          Number(product.options[selected].additionalPrice),
       );
     }
   }, [quantity, selected, product]);

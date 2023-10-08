@@ -1,6 +1,7 @@
 "use client";
 
 import CheckoutForm from "@/components/CheckoutForm";
+import Loading from "@/components/Loading";
 import { Elements } from "@stripe/react-stripe-js";
 import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
@@ -45,10 +46,12 @@ const PayPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
-      {clientSecret && (
+      {clientSecret ? (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm totalPayment={totalPayment} />
         </Elements>
+      ) : (
+        <Loading />
       )}
     </div>
   );
